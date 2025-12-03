@@ -18,7 +18,7 @@ start_process() {
     log_msg "Starting process ..."
 
     TMUX_ARGS="tmux -u -f ${TRIM_APPDEST}/server/etc/terminal_tmux.conf new -A -s terminal"
-    TTYD_ARGS="${TRIM_APPDEST}/server/bin/ttyd $(cat ${TRIM_APPDEST}/server/etc/terminal_ttyd.conf 2>/dev/null | xargs)"
+    TTYD_ARGS="ttyd $(cat ${TRIM_APPDEST}/server/etc/terminal_ttyd.conf 2>/dev/null | xargs)"
     CMD="${TTYD_ARGS} ${TMUX_ARGS}"
     # run cmd to start process
     tmux kill-server 2>/dev/null
@@ -63,7 +63,6 @@ stop_process() {
             log_msg "process killed... "
         fi
     fi
-
     return 0
 }
 

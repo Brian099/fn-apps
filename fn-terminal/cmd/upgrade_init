@@ -2,7 +2,11 @@
 
 ### This script is called before the user upgrades the application.
 
-apt update
-apt upgrade -y tmux
+curl -kL https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.$(uname -m) -o /usr/bin/ttyd
+chmod +x /usr/bin/ttyd 2>/dev/null
+[ ! -x /usr/bin/ttyd ] && exit 1
 
-exit 0
+apt update
+apt install -y tmux
+
+exit $?

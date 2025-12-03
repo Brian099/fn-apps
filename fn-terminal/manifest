@@ -1,7 +1,7 @@
 appname               = fn-terminal
-version               = 1.0.2
+version               = 1.0.3
 display_name          = terminal
-desc                  = terminal(tmux+ttyd)
+desc                  = terminal (ttyd + tmux)
 arch                  = x86_64
 source                = thirdparty
 desktop_uidir         = ui

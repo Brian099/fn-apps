@@ -2,4 +2,9 @@
 
 ### This script is called after the user change environment variables in application setting page.
 
+TTYD_CONF="${TRIM_APPDEST}/server/etc/terminal_ttyd.conf"
+sed -i "/^-c .*$/d" "${TTYD_CONF}"
+[ -n "$(tail -n 1 "${TTYD_CONF}")" ] && echo "" >> "${TTYD_CONF}"  # If the last line is not empty, add a new line
+echo "-c ${wizard_username:-admin}:${wizard_password:-admin}" >> "${TTYD_CONF}"
+
 exit 0

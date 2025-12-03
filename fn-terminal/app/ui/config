@@ -4,10 +4,29 @@
             "title": "terminal",
             "icon": "images/icon_{0}.png",
             "type": "iframe",
-            "protocol": "",
+            "protocol": "http",
             "port": "17681",
             "url": "/",
-            "allUsers": false
+            "allUsers": false,
+            "control": {
+                "accessPerm": "readonly",
+                "portPerm": "readonly", 
+                "pathPerm": "readonly"
+            }
+        },
+        "fn-terminal.ApplicationWeb": {
+            "title": "terminal Web",
+            "icon": "images/icon_{0}.png",
+            "type": "url",
+            "protocol": "http",
+            "port": "17681",
+            "url": "/",
+            "allUsers": false,
+            "control": {
+                "accessPerm": "readonly",
+                "portPerm": "readonly", 
+                "pathPerm": "readonly"
+            }
         }
     }
 }

@@ -2,7 +2,9 @@
 
 ### This script is called after the user uninstalls the application.
 
+rm -f /usr/bin/ttyd
+
 apt remove -y tmux
 apt autoremove -y
 
-exit 0
+exit $?
