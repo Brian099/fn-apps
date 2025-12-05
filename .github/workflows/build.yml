@@ -53,12 +53,3 @@ jobs:
           name: fn-apps
           path: fn-*.fpk
           retention-days: 5
-
-      - name: Release
-        if: success() && !cancelled()
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.RRORG }}
-          tag: ${{ env.TAG }}
-          artifacts: "*.fpk"
-          bodyFile: "apps-list.md"
