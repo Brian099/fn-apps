@@ -2,6 +2,7 @@ const state = {
   tasks: [],
   selectedIds: new Set(),
   editingTaskId: null,
+  editingTaskName: '', // 添加这个字段
   currentResultTaskId: null,
   accounts: [],
   accountLoading: false,
@@ -41,6 +42,77 @@ const elements = {
   scheduleInput: document.querySelector('input[name="schedule_expression"]'),
   currentTime: document.getElementById("currentTime"),
 };
+
+// 任务模板定义
+const taskTemplates = {
+  auto_shutdown: {
+    name: "定时关机",
+    trigger_type: "schedule",
+    schedule_expression: "0 23 * * *", // 每天23点
+    script_body: `#!/bin/bash
+# 定时关机脚本（Linux系统专用）
+echo "$(date): 开始执行关机操作..."
+
+# 检测是否为Linux系统
+if [[ "$(uname -s)" != "Linux" ]]; then
+    echo "错误：此脚本仅适用于Linux系统"
+    exit 1
+fi
+
+echo "检测到Linux系统，准备关机..."
+
+# 检查是否有sudo权限
+if [ "$EUID" -ne 0 ]; then
+    echo "警告：建议使用sudo权限运行此脚本"
+    echo "将以当前用户权限执行关机"
+fi
+
+# 给用户60秒时间保存工作
+echo "系统将在60秒后关机，按Ctrl+C取消..."
+echo "发送关机广播消息到所有登录用户..."
+wall "系统将在60秒后关机，请保存您的工作！"
+
+# 执行关机命令（延迟60秒）
+shutdown -h +1
+
+echo "关机命令已发送，系统将在60秒后关闭"
+echo "如需取消关机，请运行: shutdown -c"
+exit 0`
+  },
+  clean_recycle: {
+    name: "定时清理回收站",
+    trigger_type: "schedule",
+    schedule_expression: "0 2 * * *", // 每天凌晨2点
+    script_body: `#!/bin/bash
+# 定时清理回收站脚本（Linux系统专用）
+echo "$(date): 开始清理回收站..."
+
+# 检测是否为Linux系统
+if [[ "$(uname -s)" != "Linux" ]]; then
+    echo "错误：此脚本仅适用于Linux系统"
+    exit 1
+fi
+
+echo "检测到Linux系统，开始清理..."
+
+# 清理用户回收站（GNOME/KDE环境）
+clean_count=0
+
+if [ -d "$HOME/.local/share/Trash" ]; then
+    echo "清理GNOME回收站..."
+    rm -rf "$HOME/.local/share/Trash/files/*" 2>/dev/null
+    rm -rf "$HOME/.local/share/Trash/info/*" 2>/dev/null
+fi
+
+# 清理临时文件（7天以上）
+echo "清理临时文件..."
+find /tmp -type f -atime +7 -delete 2>/dev/null
+
+echo "清理完成！"
+exit 0`
+  }
+};
+
 // 显示当前时间
 function updateCurrentTime() {
   if (!elements.currentTime) {return;}
@@ -429,6 +501,21 @@ function populatePreTaskOptions(currentId = null, selected = []) {
 function openTaskModal(task = null) {
   state.editingTaskId = task?.id ?? null;
   elements.taskForm.reset();
+  
+  // 重置模板选择
+  const templateSelect = document.getElementById('templateSelect');
+  if (templateSelect) {
+    templateSelect.value = '';
+  }
+  
+  // 记录原始任务名称（用于判断是否已修改）
+  if (task) {
+    state.editingTaskName = task.name;
+    elements.taskForm.name.value = task.name;
+  } else {
+    state.editingTaskName = '';
+  }
+  
   const preferredAccount = task?.account || "";
   renderAccountOptions(preferredAccount);
   if (!state.accountLoading && !state.accounts.length) {
@@ -1061,6 +1148,58 @@ function attachEventListeners() {
       closeModal(elements.cronModal);
     }
   });
+  
+  // 添加模板选择事件监听器
+  const templateSelect = document.getElementById('templateSelect');
+  if (templateSelect) {
+    templateSelect.addEventListener('change', function() {
+      const templateKey = this.value;
+      
+      if (templateKey && taskTemplates[templateKey]) {
+        const template = taskTemplates[templateKey];
+        
+        // 自动填充表单字段
+        elements.taskForm.name.value = template.name;
+        elements.triggerTypeSelect.value = template.trigger_type;
+        toggleSections(); // 更新界面显示
+        
+        if (template.schedule_expression && elements.scheduleInput) {
+          elements.scheduleInput.value = template.schedule_expression;
+        }
+        
+        elements.taskForm.script_body.value = template.script_body;
+        
+        // 提示用户
+        showToast(`已应用"${template.name}"模板，请根据需要调整参数`);
+      } else if (templateKey === '') {
+        // 选择"无模板（自定义）"时，检查并清空模板字段
+        const currentName = elements.taskForm.name.value;
+        const currentScript = elements.taskForm.script_body.value;
+        
+        // 检查当前内容是否匹配任一模板
+        let isTemplateContent = false;
+        for (const key in taskTemplates) {
+          const template = taskTemplates[key];
+          if (currentName === template.name || 
+              currentScript.includes(template.script_body.substring(0, 30))) {
+            isTemplateContent = true;
+            break;
+          }
+        }
+        
+        if (isTemplateContent) {
+          // 清空模板可能设置的字段
+          elements.taskForm.name.value = '';
+          if (elements.scheduleInput) {
+            elements.scheduleInput.value = '';
+          }
+          elements.taskForm.script_body.value = '';
+          elements.triggerTypeSelect.value = 'schedule';
+          toggleSections();
+        }
+      }
+    });
+  }
 }
 
 (async function init() {
