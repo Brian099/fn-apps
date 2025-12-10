@@ -72,8 +72,25 @@
                         <small id="accountStatus" class="muted account-status-text">Linux 环境仅可选择系统组的账号；Windows
                             环境默认使用当前登录账号</small>
                     </label>
+                    <!-- 模板选择 -->
+					<label>
+						<span>任务模板</span>
+						<select name="template" id="templateSelect">
+							<option value="">无模板（自定义）</option>
+							<option value="auto_shutdown">定时关机</option>
+							<option value="clean_recycle">定时清理回收站</option>
+						</select>
+						<small class="muted">选择模板会自动填充任务内容</small>
+					</label>
+					<label>
+						<span>触发方式</span>
+						<select name="trigger_type" id="triggerType">
+							<option value="schedule">定时</option>
+							<option value="event">事件</option>
+						</select>
+					</label>
                     <label>
-                        <span id="isActiveLabel">是否启动</span>
+                        <span id="isActiveLabel">立即启动</span>
                         <label class="switch" for="isActiveCheckbox">
                             <input type="checkbox" id="isActiveCheckbox" name="is_active" checked
                                 aria-labelledby="isActiveLabel" />
