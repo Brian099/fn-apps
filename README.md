@@ -5,11 +5,13 @@
 ## 模块速览
 | 应用名称 | 版本 | 描述 |
 |----------|------|------|
-| fn-msedge | v | Microsoft Edge 是一款由 Microsoft 开发、基于 Chromium 的跨平台网页浏览器。 |
-| fn-open-vm-tools | v | Open-VM-Tools 是 VMware Tools 的开源替代品，旨在为运行在 VMware 环境中的虚拟机提供更好的性能和用户体验。 |
-| fn-qemu-ga | v | QEMU Guest Agent 是一个运行在虚拟机内部的守护进程，旨在通过与虚拟化主机的交互，执行一系列操作以增强虚拟机的管理能力。 |
-| fn-scheduler | v | 轻量级的任务计划应用，支持定时和条件触发任务执行。 |
-| fn-terminal | v | terminal (ttyd + tmux) |
+| fn-kodi | v1.0.1 | Kodi 是一个免费且开源的媒体播放器软件，用于播放视频、音频和图像。 |
+| fn-msedge | v1.0.2 | Microsoft Edge 是一款由 Microsoft 开发、基于 Chromium 的跨平台网页浏览器。 |
+| fn-open-vm-tools | v1.0.3 | Open-VM-Tools 是 VMware Tools 的开源替代品，旨在为运行在 VMware 环境中的虚拟机提供更好的性能和用户体验。 |
+| fn-qemu-ga | v1.0.3 | QEMU Guest Agent 是一个运行在虚拟机内部的守护进程，旨在通过与虚拟化主机的交互，执行一系列操作以增强虚拟机的管理能力。 |
+| fn-scheduler | v1.0.7 | 轻量级的任务计划应用，支持定时和条件触发任务执行。 |
+| fn-sshd-config | v1.0.0 | 设置 root 用户密码，修改 SSHD 配置，卸载时还原配置. |
+| fn-terminal | v1.0.3 | terminal (ttyd + tmux) |
 
 ## 社区支持
 - QQ 群：130359605 · [点击加入](https://qm.qq.com/q/xMUyJacSIw)
