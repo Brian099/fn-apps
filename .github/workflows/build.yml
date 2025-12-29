@@ -37,6 +37,7 @@ jobs:
 
           APPS=()
           for APP in fn-*; do
+            [ -f "${APP}/norelease" ] && continue
             [ -f "${APP}/manifest" ] || continue
             echo "Building ${APP} ..."
 
