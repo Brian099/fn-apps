@@ -25,3 +25,8 @@ indent_size = 4
 [*.{c,h}]
 indent_style = space
 indent_size = 4
+
+[*.bat]
+end_of_line = crlf
+indent_style = space
+indent_size = 4
