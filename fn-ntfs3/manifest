@@ -1,5 +1,5 @@
 appname               = fn-ntfs3
-version               = 1.0.1
+version               = 1.0.2
 display_name          = ntfs3
 desc                  = ntfs3 驱动是一个用于 Linux 内核的开源 NTFS 文件系统驱动程序，旨在提供对 NTFS 格式化分区的高性能读写支持。
 platform              = all

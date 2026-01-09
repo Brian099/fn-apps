@@ -2,32 +2,4 @@
 
 ### This script is called after the user installs the application.
 
-KVER="$(uname -r)"
-SVER="$(echo "${KVER}" | cut -d'.' -f1,2)"
-
-# Prepare build environment
-if [ ! -f "${TRIM_APPDEST}/server/src/${SVER}/Makefile" ]; then
-  echo "Source code for kernel version ${SVER} not found." >>${LOG_FILE}
-  exit 1
-fi
-
-# Build the module
-make -C /lib/modules/${KVER}/build M="${TRIM_APPDEST}/server/src/${SVER}" CONFIG_NTFS3_FS=m CONFIG_NTFS3_LZX_XPRESS=y modules
-[ $? -ne 0 ] && echo "Make module failed." >>${LOG_FILE} && exit 1
-strip -g "${TRIM_APPDEST}/server/src/${SVER}/ntfs3.ko"
-
-# Install the module
-mkdir -p /usr/lib/modules/${KVER}/updates/fs
-rm -f /usr/lib/modules/${KVER}/updates/fs/ntfs3.ko 2>/dev/null || true
-cp -vpf "${TRIM_APPDEST}/server/src/${SVER}/ntfs3.ko" /usr/lib/modules/${KVER}/updates/fs/ntfs3.ko
-
-depmod -a || true
-echo ntfs3 >/etc/modules-load.d/ntfs3.conf
-
-# Restart systemd-modules-load.service to load the module
-systemctl restart systemd-modules-load.service
-
-# Replace the mount.ntfs symlink to point to mount.ntfs3
-rm -f /usr/sbin/mount.ntfs && echo -e '#!/bin/sh\nmount -t ntfs3 "$@"' >/usr/sbin/mount.ntfs && chmod a+x /usr/sbin/mount.ntfs
-
-exit $?
+$(dirname $0)/build >$TRIM_TEMP_LOGFILE 2>&1
