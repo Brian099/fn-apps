@@ -876,6 +876,37 @@ iw_reg_country() {
   iw reg get 2>/dev/null | awk '/^country /{gsub(":","",$2); print $2; exit}' || true
 }
 
+iw_channels_for_band() {
+  band="$1"
+  command -v iw >/dev/null 2>&1 || return 0
+
+  case "$band" in
+    bg|2.4g|2g)
+      band_pat="Band 1:"
+      ;;
+    a|5g|5G)
+      band_pat="Band 2:"
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+
+  iw list 2>/dev/null | awk -v pat="$band_pat" '
+    BEGIN{in_band=0}
+    $0 ~ ("^[[:space:]]*" pat) {in_band=1; next}
+    in_band && /^[[:space:]]*Band/ {in_band=0}
+    in_band && /^[[:space:]]*\*[[:space:]]*[0-9]+ MHz \[[0-9]+\]/ {
+      n = index($0, "[")
+      m = index($0, "]")
+      if (n && m && m > n) {
+        ch = substr($0, n+1, m-n-1)
+        print ch
+      }
+    }
+  '
+}
+
 iface_is_wifi() {
   dev="$1"
   [ -n "$dev" ] || return 1
