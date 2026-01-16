@@ -5,12 +5,7 @@
             {
                 "type": "tips",
                 "helpText": "您即将卸载此应用。请选择如何处理应用数据："
-            }
-        ]
-    },
-    {
-        "stepTitle": "数据配置",
-        "items": [
+            },
             {
                 "type": "radio",
                 "field": "wizard_data_action",
@@ -22,7 +17,7 @@
                         "value": "keep"
                     },
                     {
-                        "label": "恢复设置",
+                        "label": "还原设置",
                         "value": "delete"
                     }
                 ],
@@ -32,10 +27,6 @@
                         "message": "请选择数据保留选项"
                     }
                 ]
-            },
-            {
-                "type": "tips",
-                "helpText": "<strong>警告：</strong> 选择恢复设置后，所有应用设置将恢复为默认值。"
             }
         ]
     }

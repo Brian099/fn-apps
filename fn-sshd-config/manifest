@@ -1,5 +1,5 @@
 appname               = fn-sshd-config
-version               = 1.0.3
+version               = 1.0.4
 display_name          = sshd-config
 desc                  = 设置 root 用户密码，修改 SSHD 配置.
 platform              = all
@@ -9,3 +9,4 @@ maintainer_url        = https://github.com/RROrg
 distributor           = RROrg
 distributor_url       = https://github.com/RROrg/fn-apps
 install_type          = root
+ctl_stop              = false

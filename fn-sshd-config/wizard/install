@@ -4,7 +4,7 @@
         "items": [
             {
                 "type": "tips",
-                "helpText": "设置 root 用户密码，修改 SSHD 配置。"
+                "helpText": "欢迎使用我们的应用！"
             },
             {
                 "type": "text",
