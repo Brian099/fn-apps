@@ -5,9 +5,8 @@
             "desc": "msedge",
             "icon": "images/icon_{0}.png",
             "type": "iframe",
-            "protocol": "https",
-            "port": "4001",
-            "url": "/",
+            "port": "${wizard_port}",
+            "url": "${wizard_base_path}",
             "allUsers": false,
             "control": {
                 "accessPerm": "readonly",

@@ -2,11 +2,4 @@
 
 ### This script is called after the user upgrades the application.
 
-# Update configuration based on wizard inputs
-sed -i "s|\"protocol\":.*,$|\"protocol\": \"${wizard_protocol:-https}\",|g" ${TRIM_APPDEST}/ui/config
-sed -i "s|\"port\":.*,$|\"port\": \"${wizard_https_port:-4001}\",|g" ${TRIM_APPDEST}/ui/config
-sed -i "s|\"url\":.*,$|\"url\": \"${wizard_base_path:-/}\",|g" ${TRIM_APPDEST}/ui/config
-
-psql -U postgres -d appcenter -c "UPDATE app_service SET url='${wizard_protocol:-https}://\${host}:${wizard_https_port:-4001}${wizard_base_path:-/}', default_url='${wizard_protocol:-https}://\${host}:${wizard_https_port:-4001}${wizard_base_path:-/}' WHERE service_name LIKE '${TRIM_APPNAME}.%';"
-
 exit 0

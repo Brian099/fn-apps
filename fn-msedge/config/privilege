@@ -1,6 +1,6 @@
 {
-    "defaults": {
-        "run-as": "root"
-    },
-    "username": "docker-fn-msedge"
+  "defaults": {
+    "run-as": "root"
+  },
+  "username": "docker-fn-msedge"
 }

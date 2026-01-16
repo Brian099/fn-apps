@@ -1,5 +1,5 @@
 appname               = fn-msedge
-version               = 1.0.3
+version               = 1.0.4
 display_name          = msedge
 desc                  = Microsoft Edge 是一款由 Microsoft 开发、基于 Chromium 的跨平台网页浏览器。
 platform              = x86
@@ -12,5 +12,3 @@ distributor           = RROrg
 distributor_url       = https://github.com/RROrg/fn-apps
 install_type          = root
 reloadui              = yes
-service_port          = 4000,4001
-checkport             = true

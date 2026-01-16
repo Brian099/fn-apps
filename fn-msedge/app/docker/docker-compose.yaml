@@ -9,11 +9,12 @@ services:
       - LC_ALL=zh_CN.UTF-8
       - CUSTOM_USER=${wizard_username:-admin}
       - PASSWORD=${wizard_password:-admin}
+      - SUBFOLDER=${wizard_base_path:-/msedge/}
+      - EDGE_CLI=http://localhost/
     volumes:
       - /var/apps/fn-msedge/shares/msedge/config:/config
     ports:
-      - ${wizard_http_port:-4000}:3000
-      - ${wizard_https_port:-4001}:3001
+      - ${wizard_port:-4001}:3001
     shm_size: "1gb"
     restart: unless-stopped
     networks:
