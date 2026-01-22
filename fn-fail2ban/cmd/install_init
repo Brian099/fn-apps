@@ -1,0 +1,24 @@
+#!/bin/bash
+
+### This script is called before the user installs the application.
+
+apt update
+apt install -y --no-install-recommends python3-systemd fail2ban
+[ $? -ne 0 ] && echo "Failed to install fail2ban package." >$TRIM_TEMP_LOGFILE && exit 1
+
+sed -i "s|#allowipv6.*$|allowipv6 = auto|" /etc/fail2ban/fail2ban.conf
+rm -f /etc/fail2ban/jail.d/*.conf
+
+cat <<EOF >/etc/fail2ban/jail.d/fnOS.conf
+[sshd]
+enabled = true
+filter = sshd
+action = iptables-multiport[name=sshd, port="ssh", protocol=tcp]
+backend = systemd
+logpath = journal
+maxretry = 5
+bantime = 3600
+EOF
+[ $? -ne 0 ] && echo "Failed to create fail2ban jail configuration." >$TRIM_TEMP_LOGFILE && exit 1
+
+exit 0

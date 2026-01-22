@@ -1,0 +1,8 @@
+#!/bin/bash
+
+### This script is called after the user uninstalls the application.
+
+apt purge -y fail2ban # python3-systemd fail2ban
+apt autoremove -y
+
+exit $?

@@ -1,0 +1,639 @@
+:root {
+  --bg: #f3f4f6;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --surface: #ffffff;
+  --surface2: #f9fafb;
+  --primary: #2563eb;
+  --success: #16a085;
+  --warning: #f59e0b;
+  --error: #dc2626;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.container {
+  margin: 18px 18px 18px 18px;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
+}
+
+h1 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+}
+
+/* Header layout */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.header .spacer {
+  flex: 1
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.header select {
+  margin-left: 6px;
+}
+
+
+.toolbar {
+  margin: 12px 0 18px 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toolbar .spacer {
+  flex: 1
+}
+
+/* Language / Theme select (rounded pill with chevron) */
+.toolbar select,
+.header select {
+  width: auto;
+  padding: 6px 32px 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background-color: var(--surface2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%),
+    linear-gradient(to right, var(--border), var(--border));
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 11px) 50%,
+    calc(100% - 28px) 50%;
+  background-size:
+    6px 6px,
+    6px 6px,
+    1px 16px;
+  background-repeat: no-repeat;
+}
+
+.toolbar select:hover,
+.header select:hover {
+  background-color: var(--surface);
+}
+
+.toolbar select:focus-visible,
+.header select:focus-visible {
+  outline: 2px solid var(--border);
+  outline-offset: 2px;
+}
+
+/* dark-mode tweak (variables live under html[data-theme="dark"]) */
+html[data-theme="dark"] .toolbar select,
+html[data-theme="dark"] .header select {
+  background-color: var(--surface2);
+  color: var(--text);
+}
+
+button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600
+}
+
+button:hover {
+  background: var(--surface);
+}
+
+/* Disabled button visual */
+button:disabled,
+button[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(10%);
+  box-shadow: none;
+}
+
+/* Primary disabled variant */
+.btn-primary:disabled,
+.btn-primary[disabled] {
+  background: color-mix(in srgb, var(--primary) 30%, transparent);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+th,
+td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle
+}
+
+th {
+  color: var(--muted);
+  font-weight: 700;
+  background: var(--surface2);
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--error);
+  color: #fff;
+  font-size: 12px
+}
+
+.badge.enabled {
+  background: var(--success);
+}
+
+.badge.disabled {
+  background: var(--muted);
+  color: #fff;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Dark theme overrides */
+html[data-theme="dark"] {
+  /* Visual Studio Dark inspired palette */
+  --bg: #1E1E1E;
+  --text: #D4D4D4;
+  --muted: #9AA7B0;
+  --border: #3C3C3C;
+  --surface: #252526;
+  --surface2: #2D2D30;
+  --primary: #007ACC;
+  --accent: #3794FF;
+  --selection: #264F78;
+  --success: #81B88B;
+  --warning: #D7BA7D;
+  --error: #F48771;
+
+  /* Semantic/token colors (optional) */
+  --token-comment: #6A9955;
+  --token-string: #CE9178;
+  --token-keyword: #569CD6;
+  --token-number: #B5CEA8;
+  --token-function: #DCDCAA;
+  --token-variable: #9CDCFE;
+  --token-type: #4EC9B0;
+
+  color-scheme: dark;
+}
+
+/* Dark-specific table hover/selected tweaks */
+html[data-theme="dark"] table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+html[data-theme="dark"] table tr.selected {
+  background: linear-gradient(90deg, rgba(0, 122, 204, 0.07), transparent);
+}
+
+html[data-theme="dark"] .badge.disabled {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.small {
+  font-size: 12px
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.55);
+  z-index: 10000
+}
+
+.modal.show {
+  display: flex
+}
+
+.modal .panel {
+  background: var(--surface);
+  color: var(--text);
+  padding: 14px;
+  width: 92%;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Compact styles for ban-list modal */
+#ban-list {
+  padding: 0;
+  margin: 0;
+}
+
+#ban-list li {
+  padding: 6px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px
+}
+
+#ban-list li .muted {
+  color: var(--muted);
+}
+
+#ban-list li button {
+  padding: 4px 8px;
+  font-size: 12px
+}
+
+#ban-input {
+  flex: 1
+}
+
+/* Audit modal filter row: ensure input grows and refresh button does not stretch */
+#audit-filter {
+  flex: 1;
+  min-width: 0;
+}
+
+#audit-refresh {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+/* When modal open, prevent background scroll */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Modal show animation */
+.modal.show {
+  animation: modal-in .12s ease;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal textarea {
+  width: 100%;
+  height: 320px;
+  font-family: monospace;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px
+}
+
+/* Panel header / body / actions */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.panel-header .panel-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center
+}
+
+.panel-body {
+  padding: 4px 0
+}
+
+.panel .panel-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px
+}
+
+/* Fields */
+.field-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 10px
+}
+
+.field-label {
+  width: auto;
+  padding: 8px 10px;
+  font-size: 14px
+}
+
+.field-control {
+  flex: 1
+}
+
+/* Allow flex children to shrink on small screens to avoid overflow */
+.field-control {
+  min-width: 0;
+}
+
+input.input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px
+}
+
+input.input::placeholder {
+  color: var(--muted)
+}
+
+textarea {
+  min-height: 240px;
+  resize: vertical;
+  font-family: Menlo, Monaco, monospace
+}
+
+/* Improve primary button visuals */
+.btn-primary {
+  background: linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 80%, black 10%));
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.14);
+  border: none
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.12);
+}
+
+/* Close button visual */
+#msg-close {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 6px 10px
+}
+
+/* Message body */
+.msg-body {
+  white-space: pre-wrap;
+  color: var(--text);
+  min-height: 60px
+}
+
+/* Slightly smaller modal for simple messages */
+#modal-msg .panel {
+  max-width: 640px;
+}
+
+/* Focus and accessibility */
+.panel-header button:focus-visible,
+.panel-actions button:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.14);
+  outline-offset: 2px
+}
+
+@media (max-width:680px) {
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    /* keep actions on one line */
+    gap: 8px;
+    overflow-x: auto;
+    /* allow horizontal scroll on very narrow screens */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch
+  }
+
+  .toolbar select,
+  .header select {
+    width: 100%;
+  }
+
+  /* Toolbar buttons should be intrinsic width and wrap when necessary. */
+  .toolbar>button {
+    width: auto;
+  }
+
+  /* The spacer pushes trailing actions to the right; keep those actions intrinsic width. */
+  .toolbar .spacer {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .toolbar .spacer~button {
+    width: auto;
+    align-self: center;
+  }
+
+  /* Ensure panel header actions wrap instead of forcing children to full width */
+  .panel-header .panel-header-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Make modal panel narrower and reduce padding on small screens */
+  .modal .panel {
+    width: calc(100% - 32px);
+    max-width: 720px;
+    padding: 10px;
+  }
+
+  /* Panel header actions: keep buttons intrinsic but allow them to wrap nicely */
+  .panel-header .panel-header-actions>button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Prevent header action buttons in modals from wrapping on small screens;
+       allow horizontal scroll if necessary so they stay on one line. */
+  .panel-header .panel-header-actions {
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Audit filter row: allow filter + buttons to stack neatly */
+  #audit-filter {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  #audit-refresh,
+  #audit-export,
+  #audit-clear {
+    width: auto;
+  }
+
+  .field-row {
+    flex-direction: column;
+  }
+
+  .field-label {
+    width: auto;
+    margin-bottom: 6px
+  }
+
+  /* Stronger enforcement for the edit modal on small screens */
+  #modal-edit .field-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #modal-edit .field-label {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  #modal-edit .field-control {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #modal-edit #jail-name {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* accessibility focus */
+button:focus-visible,
+.modal .panel:focus-visible {
+  outline: 2px solid var(--border);
+  outline-offset: 2px
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px
+}
+
+/* Table row selection and hover */
+table tr.selected {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), transparent);
+}
+
+table tr:hover {
+  background: rgba(2, 6, 23, 0.03);
+}
+
+/* Table wrap: make only the table area scrollable */
+.table-wrap {
+  width: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 170px);
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Sticky table header so the header doesn't scroll with the body */
+.table-wrap thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--surface2);
+}
+
+/* Modal action buttons alignment */
+.modal .panel .actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px
+}
+
+/* Inputs inside modal */
+#modal-edit input,
+#modal-edit textarea {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* readonly input appearance */
+input.readonly {
+  background: var(--surface2);
+  color: var(--muted);
+}
+
+/* inline form error */
+.form-error {
+  color: var(--error);
+  margin-top: 8px;
+}
+
+/* Small visual tweaks */
+.container {
+  transition: background .15s ease, box-shadow .15s ease
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>fn-fail2ban</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 data-i18n="title.page">Fail2Ban 管理</h1>
+      <span class="spacer" aria-hidden="true"></span>
+      <select id="langSelect" aria-label="Language" data-i18n-aria-label="aria.langSelect">
+        <option value="zh">中文</option>
+        <option value="en">English</option>
+      </select>
+      <select id="themeSelect" aria-label="Theme" data-i18n-aria-label="aria.themeSelect">
+        <option value="system">跟随系统</option>
+        <option value="light">亮模式</option>
+        <option value="dark">暗模式</option>
+      </select>
+    </div>
+    <div class="toolbar">
+      <button id="btn-new" data-i18n="btn.new">新建</button>
+      <button id="btn-delete" data-i18n="btn.delete">删除</button>
+      <button id="btn-edit" data-i18n="btn.edit">编辑</button>
+      <button id="btn-audit" data-i18n="btn.audit">审计</button>
+      <button id="btn-refresh" data-i18n="btn.refresh">刷新</button>
+      <span class="spacer" aria-hidden="true"></span>
+      <button id="btn-reload" data-i18n="btn.reload">重载</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="jail-table">
+        <thead>
+          <tr>
+            <th data-i18n="col.name">名称</th>
+            <th data-i18n="col.state">状态</th>
+            <th data-i18n="col.count">被封 IP 数</th>
+            <th data-i18n="col.list">被封 IP 列表</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 审计日志 模态 -->
+  <div id="modal-audit" class="modal">
+    <div class="panel">
+      <div class="panel-header">
+        <strong id="modal-audit-title">审计日志</strong>
+        <div class="panel-header-actions">
+          <button id="audit-export" data-i18n="btn.export">导出</button>
+          <button id="audit-clear" data-i18n="btn.clear">清空</button>
+          <button id="modal-audit-close" data-i18n="btn.close">关闭</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <input id="audit-filter" class="input" placeholder="筛选（jail / ip / action）" />
+          <button id="audit-refresh" class="btn-primary" data-i18n="btn.refresh">刷新</button>
+        </div>
+        <div id="audit-list-container" style="max-height:420px;overflow:auto">
+          <ul id="audit-list" style="list-style:none;padding:0;margin:0"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑 / 新建 模态 -->
+  <div id="modal-edit" class="modal">
+    <div class="panel">
+      <div class="panel-header">
+        <strong id="modal-title" data-i18n="modal.editTitle">编辑 Jail</strong>
+        <div class="panel-header-actions">
+          <button id="modal-save" class="btn-primary" data-i18n="modal.save">保存</button>
+          <button id="modal-cancel" data-i18n="modal.cancel">取消</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="field-row">
+          <label class="field-label">
+            <span data-i18n="label.jailName">jail 名称:</span>
+          </label>
+          <div class="field-control">
+            <input id="jail-name" class="input" placeholder="名称" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-control">
+            <textarea id="jail-content" placeholder="在此编辑 / 粘贴 jail 配置"
+              data-i18n-placeholder="placeholder.jailContent"></textarea>
+          </div>
+        </div>
+        <div id="modal-error" class="form-error small" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 消息模态 -->
+  <div id="modal-msg" class="modal">
+    <div class="panel">
+      <div class="panel-header">
+        <strong data-i18n="modal.msg">消息</strong>
+        <div class="panel-header-actions">
+          <button id="msg-close" data-i18n="btn.close">关闭</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div id="msg-body" class="msg-body"></div>
+        <div id="msg-actions" class="panel-actions">
+          <button id="msg-confirm" class="btn-primary" style="display:none" data-i18n="btn.confirm">确认</button>
+          <button id="msg-cancel" style="display:none" data-i18n="modal.cancel">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 被封 IP 列表 模态 -->
+  <div id="modal-ban" class="modal">
+    <div class="panel">
+      <div class="panel-header">
+        <strong id="modal-ban-title">被封 IP 列表</strong>
+        <div class="panel-header-actions">
+          <button id="ban-export" data-i18n="btn.export">导出</button>
+          <button id="ban-import" data-i18n="btn.import">导入</button>
+          <button id="ban-clear" data-i18n="btn.clear">清空</button>
+          <button id="modal-ban-close" data-i18n="btn.close">关闭</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div id="ban-list-container">
+          <ul id="ban-list" style="list-style:none;padding:0;margin:0 0 12px 0;max-height:320px;overflow:auto"></ul>
+        </div>
+        <input id="ban-import-file" type="file" accept=".json,.csv,.txt" style="display:none" />
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="ban-input" class="input" placeholder="输入 IP 地址 或 CIDR"
+            data-i18n-placeholder="placeholder.banInput" />
+          <button id="ban-add" class="btn-primary" data-i18n="btn.add">添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
