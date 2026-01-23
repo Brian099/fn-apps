@@ -8,7 +8,7 @@
             },
             {
                 "type": "tips",
-                "helpText": "  1. 由于 ntfs3 驱动已加载，重启系统后还原默认的 ntfs-3g 驱动。"
+                "helpText": "  1. 由于 ntfs3 驱动已加载，需重启系统才会还原默认的 ntfs-3g 驱动。"
             }
         ]
     }
