@@ -33,31 +33,33 @@
   </header>
 
   <main>
-    <section class="toolbar">
-      <button id="btnCreate" class="primary" data-i18n="btn.create">新建</button>
-      <button id="btnEdit" data-i18n="btn.edit">编辑</button>
-      <button id="btnDelete" class="danger" data-i18n="btn.delete">删除</button>
-      <button id="btnRun" data-i18n="btn.run">立即运行</button>
-      <button id="btnToggle" data-i18n="btn.toggle">启用/停用</button>
-      <button id="btnResults" data-i18n="btn.results">查看结果</button>
-      <button id="btnManageTemplates" data-i18n="btn.manage_templates">模板管理</button>
-    </section>
+    <section class="panel table-panel">
+      <div class="panel-toolbar toolbar">
+        <button id="btnCreate" class="primary" data-i18n="btn.create">新建</button>
+        <button id="btnEdit" data-i18n="btn.edit">编辑</button>
+        <button id="btnDelete" class="danger" data-i18n="btn.delete">删除</button>
+        <button id="btnRun" data-i18n="btn.run">立即运行</button>
+        <button id="btnToggle" data-i18n="btn.toggle">启用/停用</button>
+        <button id="btnResults" data-i18n="btn.results">查看结果</button>
+        <button id="btnManageTemplates" data-i18n="btn.manage_templates">模板管理</button>
+      </div>
 
-    <section class="table-wrapper">
-      <table id="taskTable">
-        <thead>
-          <tr>
-            <th data-i18n="table.enabled">是否启动</th>
-            <th data-i18n="table.name">任务名称</th>
-            <th data-i18n="table.next_run">下次运行时间</th>
-            <th data-i18n="table.trigger">触发类型</th>
-            <th data-i18n="table.latest_status">最新状态</th>
-            <th data-i18n="table.account">账号</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <div id="emptyState" class="empty hidden" data-i18n="empty.no_tasks">暂无任务，点击“新建”开始配置。</div>
+      <div class="table-wrapper">
+        <table id="taskTable">
+          <thead>
+            <tr>
+              <th data-i18n="table.enabled">是否启动</th>
+              <th data-i18n="table.name">任务名称</th>
+              <th data-i18n="table.next_run">下次运行时间</th>
+              <th data-i18n="table.trigger">触发类型</th>
+              <th data-i18n="table.latest_status">最新状态</th>
+              <th data-i18n="table.account">账号</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="emptyState" class="empty hidden" data-i18n="empty.no_tasks">暂无任务，点击“新建”开始配置。</div>
+      </div>
     </section>
   </main>
 
@@ -155,13 +157,13 @@
 
         <div class="modal-actions">
           <div class="modal-actions-left">
-            <label class="inline-label">
+            <div class="inline-label">
               <span id="isActiveLabel" data-i18n="field.immediate">立即启动</span>
               <label class="switch" for="isActiveCheckbox">
                 <input type="checkbox" id="isActiveCheckbox" name="is_active" checked aria-labelledby="isActiveLabel" />
                 <span class="slider"></span>
               </label>
-            </label>
+            </div>
           </div>
           <div>
             <button type="button" class="ghost" data-close data-i18n="btn.cancel">取消</button>
