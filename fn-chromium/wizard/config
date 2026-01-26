@@ -38,6 +38,28 @@
         ]
       },
       {
+        "type": "radio",
+        "field": "wizard_base",
+        "label": "Base WebUI 类型",
+        "initValue": "latest",
+        "options": [
+          {
+            "label": "selkies - 新（推荐）",
+            "value": "latest"
+          },
+          {
+            "label": "kasmvnc - 旧",
+            "value": "kasm"
+          }
+        ],
+        "rules": [
+          {
+            "required": true,
+            "message": "请选择 Base WebUI 类型"
+          }
+        ]
+      },
+      {
         "type": "text",
         "field": "wizard_port",
         "label": "端口号",
@@ -57,15 +79,15 @@
         "type": "text",
         "field": "wizard_base_path",
         "label": "基础路径",
-        "initValue": "/msedge/",
+        "initValue": "/chrome/",
         "rules": [
           {
             "required": false,
             "message": "请输入基础路径"
           },
           {
-            "pattern": "^(/[a-zA-Z0-9_/-]+)?$",
-            "message": "基础路径只能包含字母、数字、下划线、斜杠和破折号"
+            "pattern": "^(?!/?chromium(?:/)?$)(/[a-zA-Z0-9_/-]+)?$",
+            "message": "基础路径只能包含字母、数字、下划线、斜杠和破折号，且不能为 chromium"
           }
         ]
       }

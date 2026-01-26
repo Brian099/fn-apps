@@ -1,16 +1,16 @@
 {
     ".url": {
-        "fn-msedge.Application": {
-            "title": "msedge",
-            "desc": "msedge",
+        "fn-chromium.Application": {
+            "title": "Chromium",
+            "desc": "Chromium",
             "icon": "images/icon_{0}.png",
             "type": "iframe",
+            "protocol": "https",
             "port": "${wizard_port}",
             "url": "${wizard_base_path}",
-            "allUsers": false,
+            "allUsers": true,
             "control": {
-                "accessPerm": "readonly",
-                "fullUrlPerm":"readonly"
+                "accessPerm": "readonly"
             }
         }
     }

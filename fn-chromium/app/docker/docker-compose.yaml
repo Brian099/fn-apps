@@ -1,7 +1,7 @@
 services:
-  msedge:
-    image: linuxserver/msedge:latest
-    container_name: msedge
+  chromium:
+    image: linuxserver/chromium:${wizard_base:-latest}
+    container_name: chromium
     environment:
       - PUID=${TRIM_UID}
       - PGID=${TRIM_GID}
@@ -9,10 +9,12 @@ services:
       - LC_ALL=zh_CN.UTF-8
       - CUSTOM_USER=${wizard_username:-admin}
       - PASSWORD=${wizard_password:-admin}
-      - SUBFOLDER=${wizard_base_path:-/msedge/}
-      - EDGE_CLI=http://localhost/
+      - SUBFOLDER=${wizard_base_path:-/chromium/}
+      # - CHROME_CLI=http://localhost/
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
-      - /var/apps/fn-msedge/shares/msedge/config:/config
+      - /var/apps/fn-chromium/shares/chromium/config:/config
     ports:
       - ${wizard_port:-4001}:3001
     shm_size: "1gb"

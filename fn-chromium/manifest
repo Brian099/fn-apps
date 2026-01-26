@@ -1,0 +1,13 @@
+appname               = fn-chromium
+version               = 1.0.0
+display_name          = chromium
+desc                  = Chromium 是一个开源的网页浏览器项目，旨在为用户提供更安全、更快速和更稳定的浏览体验。
+platform              = all
+source                = thirdparty
+desktop_uidir         = ui
+desktop_applaunchname = fn-chromium.Application
+maintainer            = Ing
+maintainer_url        = https://github.com/RROrg
+distributor           = RROrg
+distributor_url       = https://github.com/RROrg/fn-apps
+reloadui              = yes

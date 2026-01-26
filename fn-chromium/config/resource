@@ -2,7 +2,7 @@
   "docker-project": {
     "projects": [
       {
-        "name": "fn-msedge",
+        "name": "fn-chromium",
         "path": "docker"
       }
     ]
@@ -10,10 +10,10 @@
   "data-share": {
     "shares": [
       {
-        "name": "msedge",
+        "name": "chromium",
         "permission": {
           "rw": [
-            "docker-fn-msedge"
+            "docker-fn-chromium"
           ]
         }
       }
