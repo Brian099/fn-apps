@@ -1,0 +1,11 @@
+appname               = fn-yt6801
+version               = 1.0.0
+display_name          = yt6801
+desc                  = Motorcomm/裕太微 千兆有线网卡 YT6801 驱动，提供对该芯片的网络功能支持。
+platform              = all
+source                = thirdparty
+maintainer            = Ing
+maintainer_url        = https://github.com/RROrg
+distributor           = RROrg
+distributor_url       = https://github.com/RROrg/fn-apps
+install_type          = root
