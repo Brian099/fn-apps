@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>显示器/电源设置</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h2>显示器控制</h2>
+      <div class="body">
+        <div>
+          <div>状态: <strong id="screenStatus">未知</strong></div>
+          <div>最后更新: <span id="screenTS">-</span></div>
+          <div class="button-row">
+            <button id="screenOffCard" type="button">关闭显示器</button>
+            <button id="screenOnCard" type="button">开启显示器</button>
+            <button id="screenRefresh" type="button">刷新状态</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>电源设置</h2>
+      <div class="body">
+        <form id="f" class="grid">
+          <div><label for="HandlePowerKey">按电源键时动作：</label>
+            <select id="HandlePowerKey" name="HandlePowerKey">
+              <option value="">(系统默认)</option>
+              <option value="poweroff">关机（poweroff）</option>
+              <option value="reboot">重启（reboot）</option>
+              <option value="suspend">挂起（suspend）</option>
+              <option value="hibernate">休眠（hibernate）</option>
+              <option value="ignore">忽略（ignore）</option>
+              <option value="lock">锁屏（lock）</option>
+            </select>
+          </div>
+          <div><label for="HandlePowerKeyLongPress">按电源键长按：</label>
+            <select id="HandlePowerKeyLongPress" name="HandlePowerKeyLongPress">
+              <option value="">(系统默认)</option>
+              <option value="poweroff">关机（poweroff）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleRebootKey">重启键动作：</label>
+            <select id="HandleRebootKey" name="HandleRebootKey">
+              <option value="">(系统默认)</option>
+              <option value="reboot">重启（reboot）</option>
+              <option value="poweroff">关机（poweroff）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleRebootKeyLongPress">重启键长按：</label>
+            <select id="HandleRebootKeyLongPress" name="HandleRebootKeyLongPress">
+              <option value="">(系统默认)</option>
+              <option value="poweroff">关机（poweroff）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleSuspendKey">挂起键动作：</label>
+            <select id="HandleSuspendKey" name="HandleSuspendKey">
+              <option value="">(系统默认)</option>
+              <option value="suspend">挂起（suspend）</option>
+              <option value="hibernate">休眠（hibernate）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleSuspendKeyLongPress">挂起键长按：</label>
+            <select id="HandleSuspendKeyLongPress" name="HandleSuspendKeyLongPress">
+              <option value="">(系统默认)</option>
+              <option value="hibernate">休眠（hibernate）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleHibernateKey">休眠键动作：</label>
+            <select id="HandleHibernateKey" name="HandleHibernateKey">
+              <option value="">(系统默认)</option>
+              <option value="hibernate">hibernate（休眠）</option>
+              <option value="ignore">忽略（ignore）</option>
+            </select>
+          </div>
+          <div><label for="HandleHibernateKeyLongPress">休眠键长按：</label>
+            <select id="HandleHibernateKeyLongPress" name="HandleHibernateKeyLongPress">
+              <option value="">(系统默认)</option>
+              <option value="ignore">ignore（忽略）</option>
+            </select>
+          </div>
+          <div><label for="HandleLidSwitch">合上盖子时动作：</label>
+            <select id="HandleLidSwitch" name="HandleLidSwitch">
+              <option value="">(系统默认)</option>
+              <option value="suspend">挂起（suspend）</option>
+              <option value="ignore">忽略（ignore）</option>
+              <option value="poweroff">关机（poweroff）</option>
+            </select>
+          </div>
+          <div><label for="HandleLidSwitchExternalPower">外接电源时合盖动作：</label>
+            <select id="HandleLidSwitchExternalPower" name="HandleLidSwitchExternalPower">
+              <option value="">(系统默认)</option>
+              <option value="suspend">挂起（suspend）</option>
+              <option value="ignore">忽略（ignore）</option>
+              <option value="poweroff">关机（poweroff）</option>
+            </select>
+          </div>
+          <div><label for="HandleLidSwitchDocked">Dock 时合盖动作：</label>
+            <select id="HandleLidSwitchDocked" name="HandleLidSwitchDocked">
+              <option value="">(系统默认)</option>
+              <option value="ignore">忽略（ignore）</option>
+              <option value="suspend">挂起（suspend）</option>
+            </select>
+          </div>
+        </form>
+        <div class="actions">
+          <label class="no-margin"><input type="checkbox" id="applyRestart" checked> 重启 systemd-logind 服务</label>
+          <div class="flex-fill"></div>
+          <button id="refresh" type="button">刷新</button>
+          <button id="save" type="button">保存</button>
+        </div>
+      </div>
+    </div>
+    <div id="msg" class="msg"></div>
+    <pre id="raw" class="hidden"></pre>
+  </div>
+
+  <script>
+    const fields = [
+      'HandlePowerKey', 'HandlePowerKeyLongPress',
+      'HandleRebootKey', 'HandleRebootKeyLongPress',
+      'HandleSuspendKey', 'HandleSuspendKeyLongPress',
+      'HandleHibernateKey', 'HandleHibernateKeyLongPress',
+      'HandleLidSwitch', 'HandleLidSwitchExternalPower', 'HandleLidSwitchDocked'
+    ];
+    const msg = document.getElementById('msg');
+    function showMsg(t, timeout = 3000) { if (!msg) return; msg.textContent = t; msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), timeout); }
+
+    // accessibility: ensure selects have aria-label if no visible label text
+    (function ensureAria() {
+      for (const id of [
+        'HandlePowerKey', 'HandlePowerKeyLongPress', 'HandleRebootKey', 'HandleRebootKeyLongPress',
+        'HandleSuspendKey', 'HandleSuspendKeyLongPress', 'HandleHibernateKey', 'HandleHibernateKeyLongPress',
+        'HandleLidSwitch', 'HandleLidSwitchExternalPower', 'HandleLidSwitchDocked'
+      ]) {
+        const el = document.getElementById(id);
+        if (el && !el.getAttribute('aria-label')) {
+          const lab = document.querySelector('label[for="' + id + '"]');
+          if (lab && lab.textContent) el.setAttribute('aria-label', lab.textContent.trim());
+        }
+      }
+    })();
+    async function read() {
+      showMsg('读取中...', 1200);
+      try {
+        const r = await fetch('../www/api.cgi?action=read', { cache: 'no-store' });
+        const text = await r.text();
+        let j = null; try { j = JSON.parse(text); } catch (e) { j = null }
+        if (!r.ok || !j) { showMsg('读取失败'); return; }
+        if (!j.ok) { showMsg('错误: ' + (j.error || 'unknown')); return; }
+        const parsed = j.parsed || {};
+        for (const k of fields) { const el = document.getElementById(k); if (el) el.value = parsed[k] || ''; }
+        document.getElementById('raw').textContent = j.content || '';
+        showMsg('已加载', 1000);
+      } catch (e) { showMsg('网络错误: ' + (e.message || e)); }
+    }
+    async function save(ev) {
+      ev && ev.preventDefault();
+      showMsg('保存中...', 2000);
+      const changes = {};
+      for (const k of fields) { const el = document.getElementById(k); if (!el) continue; const v = el.value; /* include empty string to indicate 'use system default' */ changes[k] = v.trim(); }
+      const apply = document.getElementById('applyRestart').checked;
+      try {
+        const r = await fetch('../www/api.cgi?action=write', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ changes, apply })
+        });
+        const text = await r.text(); let j = null; try { j = JSON.parse(text); } catch (e) { j = null }
+        if (!r.ok || !j) { showMsg('保存失败'); return; }
+        if (!j.ok) { showMsg('错误: ' + (j.error || j.message || 'unknown')); return; }
+        showMsg('保存成功', 1800);
+        read();
+      } catch (e) { showMsg('网络错误: ' + (e.message || e)); }
+    }
+    async function screenAction(state) {
+      showMsg('正在设置屏幕...', 2000);
+      try {
+        const r = await fetch('../www/api.cgi?action=screen&state=' + encodeURIComponent(state), { cache: 'no-store' });
+        const text = await r.text(); let j = null; try { j = JSON.parse(text); } catch (e) { j = null }
+        if (!r.ok || !j) { showMsg('操作失败'); return; }
+        if (!j.ok) { showMsg('错误: ' + (j.error || j.message || 'unknown')); return; }
+        showMsg('已执行: ' + state, 1500);
+        await loadScreenStatus();
+      } catch (e) { showMsg('网络错误: ' + (e.message || e)); }
+    }
+    async function loadScreenStatus() {
+      try {
+        const r = await fetch('../www/api.cgi?action=screen_status', { cache: 'no-store' });
+        const text = await r.text(); let j = null; try { j = JSON.parse(text); } catch (e) { j = null }
+        if (!r.ok || !j) { document.getElementById('screenStatus').textContent = '未知'; document.getElementById('screenTS').textContent = '-'; return; }
+        if (!j.ok) { showMsg('状态读取错误'); return; }
+        document.getElementById('screenStatus').textContent = j.state || '未知';
+        document.getElementById('screenTS').textContent = j.ts ? (new Date(j.ts * 1000)).toLocaleString() : '-';
+      } catch (e) { showMsg('网络错误: ' + (e.message || e)); }
+    }
+    document.getElementById('screenOffCard').addEventListener('click', () => screenAction('off'));
+    document.getElementById('screenOnCard').addEventListener('click', () => screenAction('on'));
+    document.getElementById('screenRefresh').addEventListener('click', () => loadScreenStatus());
+    document.getElementById('save').addEventListener('click', save);
+    document.getElementById('refresh').addEventListener('click', (e) => { e.preventDefault(); read(); });
+    read();
+    loadScreenStatus();
+  </script>
+</body>
+
+</html>

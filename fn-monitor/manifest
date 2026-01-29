@@ -1,0 +1,13 @@
+appname               = fn-monitor
+version               = 1.0.0
+display_name          = 显示器/电源设置
+desc                  = 显示器/电源设置应用，用于配置系统的显示器和电源选选项。
+platform              = all
+source                = thirdparty
+desktop_uidir         = ui
+desktop_applaunchname = fn-monitor.Application
+maintainer            = Ing
+maintainer_url        = https://github.com/RROrg
+distributor           = RROrg
+distributor_url       = https://github.com/RROrg/fn-apps
+install_type          = root

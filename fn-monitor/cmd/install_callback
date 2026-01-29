@@ -1,0 +1,8 @@
+#!/bin/bash
+
+### This script is called after the user installs the application.
+
+chmod +x ${TRIM_APPDEST}/ui/*.cgi 2>/dev/null || true
+chmod +x ${TRIM_APPDEST}/www/*.cgi 2>/dev/null || true
+
+exit 0
