@@ -1,0 +1,11 @@
+appname               = fn-broadcom-sta
+version               = 1.0.0
+display_name          = Broadcom-STA
+desc                  = Broadcom STA 是 BCM4311-、BCM4312-、BCM4313-、BCM4321-、BCM4322-、BCM43142-、BCM43224-、BCM43225-、BCM43227-、BCM43228-、BCM4331-、BCM4360- 和 BCM4352 等 IEEE 802.11a/b/g/n 无线网卡的驱动程序。
+platform              = all
+source                = thirdparty
+maintainer            = Ing
+maintainer_url        = https://github.com/RROrg
+distributor           = RROrg
+distributor_url       = https://github.com/RROrg/fn-apps
+install_type          = root
